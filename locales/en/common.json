@@ -1,0 +1,114 @@
+{
+  "site": {
+    "title": "Turn Your Photos into Ghibli-style Art",
+    "description": "Life needs a little magic",
+    "meta_title": "Ghibli-style AI Art Generator | Create Dreamy Mood Posters",
+    "meta_description": "Transform your photos into beautiful Ghibli-style artwork. Perfect for Instagram Stories and Pinterest boards.",
+    "upload_instruction": "Upload your photo and turn it into a Ghibli-style illustration.",
+    "user_count": "Over 9,800+ users have created Ghibli-style images",
+    "copyright": "Ghibli Image Generator",
+    "all_rights": "All Rights Reserved"
+  },
+  "gallery": {
+    "title": "My Gallery"
+  },
+  "upload": {
+    "title": "Upload your photo",
+    "subtitle": "Life needs a little magic",
+    "button": "Generate",
+    "drag_drop": "Drag and drop or click here",
+    "supported_formats": "Supports JPG / PNG formats, recommended ratio: 1:1",
+    "generating": "Creating your Ghibli art...",
+    "choose_different": "Choose different image",
+    "try_again": "Try again",
+    "your_own_photo": "Upload your own photo"
+  },
+  "preview": {
+    "title": "See how it works",
+    "sample_tag": "Sample",
+    "before": "Original",
+    "after": "Transformed",
+    "description": "Upload your photo and transform it into a beautiful Ghibli-inspired illustration with warm, dreamy aesthetics."
+  },
+  "generate": {
+    "button": "Generate",
+    "processing": "Creating your Ghibli-style image, please wait...",
+    "failed": "Generation Failed",
+    "create_image": "Create Ghibli Style Image"
+  },
+  "background": {
+    "select_style": "Choose Background Style",
+    "title": "Select Background Style",
+    "description": "Choose a background style that fits your image",
+    "forest": "Forest",
+    "window": "Window",
+    "hills": "Hills",
+    "cancel": "Cancel",
+    "apply": "Apply"
+  },
+  "settings": {
+    "title": "Settings",
+    "style_strength": "Style Strength"
+  },
+  "feature": {
+    "title": "Ghibli Image Generator Features",
+    "advanced_style": "Advanced Style Transfer",
+    "advanced_style_desc": "Our AI is trained on thousands of Ghibli movie scenes to precisely capture watercolor textures, lighting, and character design.",
+    "photo_transformation": "Photo Transformation",
+    "photo_transformation_desc": "Upload your photo to transform it into Ghibli style, or create new scenes through detailed text descriptions.",
+    "high_resolution": "High Resolution Artwork",
+    "high_resolution_desc": "Generate high-quality images, perfect for digital sharing and printing."
+  },
+  "quota": {
+    "free_remaining": "You have {{count}} free generations left",
+    "free_remaining_one": "You have 1 free generation left",
+    "free_remaining_zero": "You've used all your free generations",
+    "unlimited": "Unlimited generations available",
+    "credits_remaining": "You have {{count}} paid generations left",
+    "total_remaining": "You have {{free}} free and {{credits}} paid generations left",
+    "generations_remaining": "{{count}} generations remaining",
+    "no_generations": "No generations remaining",
+    "loading": "Loading..."
+  },
+  "result": {
+    "title": "Your Ghibli Artwork",
+    "download": "Download",
+    "download_ig": "Download for Instagram",
+    "download_pinterest": "Download for Pinterest",
+    "share": "Share",
+    "new_image": "Create new image",
+    "share_tip": "Press and hold to save or share to social media"
+  },
+  "subscription": {
+    "title": "Purchase Credits",
+    "description": "You've used your free generation, buy credits to continue",
+    "basic_plan": "Basic Pack",
+    "standard_plan": "Standard Pack",
+    "premium_plan": "Premium Pack",
+    "basic_description": "4 generations ($1.25/image)",
+    "standard_description": "10 generations ($1.00/image), better value",
+    "premium_description": "25 generations ($0.80/image), best value",
+    "button_buy": "Buy Now",
+    "processing": "Processing...",
+    "purchase_success": "Purchase Successful!",
+    "credits_added": "Added {{count}} generations to your account",
+    "continue_creating": "Continue Creating",
+    "buy_more_credits": "Buy Credits"
+  },
+  "auth": {
+    "sign_in": "Sign in",
+    "sign_up": "Sign up",
+    "sign_out": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "magic_link": "Get Magic Link"
+  },
+  "example": {
+    "title": "Example Ghibli-style Results",
+    "description": "Our AI transforms your photos into dreamy Ghibli-style artworks, just like these examples",
+    "caption1": "Generated with AI",
+    "caption2": "This used to be a pet photo",
+    "caption3": "Inspired by a real selfie",
+    "caption4": "Your photo could be next!"
+  }
+} 

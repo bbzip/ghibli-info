@@ -1,0 +1,114 @@
+{
+  "site": {
+    "title": "一键生成吉卜力风格图片",
+    "description": "生活需要一点童话",
+    "meta_title": "吉卜力风格AI图像生成器 | 一键做出小红书封面",
+    "meta_description": "将您的照片转换为吉卜力风格的艺术作品，完美适合小红书和朋友圈分享。",
+    "upload_instruction": "上传你的照片并将其转换成吉卜力风格的插画。",
+    "user_count": "已有 9,800+ 用户生成了吉卜力风格图像",
+    "copyright": "吉卜力图像生成器",
+    "all_rights": "保留所有权利"
+  },
+  "gallery": {
+    "title": "我的作品"
+  },
+  "upload": {
+    "title": "上传你的照片",
+    "subtitle": "生活需要一点童话",
+    "button": "生成",
+    "drag_drop": "或拖拽图片至此",
+    "supported_formats": "支持 JPG / PNG 格式，推荐尺寸：1:1",
+    "generating": "正在创建吉卜力风格图片...",
+    "choose_different": "选择其他图片",
+    "try_again": "重新上传图片",
+    "your_own_photo": "上传你自己的照片"
+  },
+  "preview": {
+    "title": "生成效果示例",
+    "sample_tag": "生成示意",
+    "before": "上传前",
+    "after": "生成后",
+    "description": "上传你的照片，即刻转换成精美的吉卜力风格图片，温暖治愈的画风，为平凡生活添一抹梦幻色彩。"
+  },
+  "generate": {
+    "button": "生成",
+    "processing": "正在创建你的吉卜力风格图片，请稍候...",
+    "failed": "生成失败",
+    "create_image": "创建吉卜力风格图像"
+  },
+  "background": {
+    "select_style": "选择背景风格",
+    "title": "选择背景风格",
+    "description": "选择合适的背景风格，让你的图片更加生动",
+    "forest": "森林",
+    "window": "窗边",
+    "hills": "山丘",
+    "cancel": "取消",
+    "apply": "应用"
+  },
+  "settings": {
+    "title": "设置",
+    "style_strength": "风格强度"
+  },
+  "feature": {
+    "title": "吉卜力图像生成器的特色功能",
+    "advanced_style": "高级风格转换技术",
+    "advanced_style_desc": "我们的AI经过数千张吉卜力电影场景训练，能够准确捕捉水彩质感、光效和人物设计，完美重现宫崎骏的魔幻世界",
+    "photo_transformation": "照片转换 & 文字生成",
+    "photo_transformation_desc": "上传照片将其转为吉卜力风格，或通过详细文本描述创建全新场景，灵活创作属于你的想象世界",
+    "high_resolution": "高分辨率艺术作品",
+    "high_resolution_desc": "生成高质量图像，完美适合数字分享和打印，即使放大也能保留精细细节"
+  },
+  "quota": {
+    "free_remaining": "你还有 {{count}} 次免费生成机会",
+    "free_remaining_one": "你还有 1 次免费生成机会",
+    "free_remaining_zero": "你已用完所有免费生成次数",
+    "unlimited": "无限生成次数",
+    "credits_remaining": "你还有 {{count}} 次付费生成机会",
+    "total_remaining": "你还有 {{free}} 次免费和 {{credits}} 次付费生成机会",
+    "generations_remaining": "剩余 {{count}} 次生成",
+    "no_generations": "没有可用生成次数",
+    "loading": "加载中..."
+  },
+  "result": {
+    "title": "你的吉卜力风格图片",
+    "download": "下载",
+    "download_xiaohongshu": "下载小红书尺寸",
+    "download_wechat": "下载朋友圈尺寸",
+    "share": "分享",
+    "new_image": "创建新图片",
+    "share_tip": "长按图片可保存或分享到社交媒体"
+  },
+  "subscription": {
+    "title": "购买积分",
+    "description": "您已使用完免费次数，购买积分继续创作",
+    "basic_plan": "基础套餐",
+    "standard_plan": "标准套餐",
+    "premium_plan": "高级套餐",
+    "basic_description": "8次生成 ($1.25/次)",
+    "standard_description": "10次生成 ($1.00/次)，更划算",
+    "premium_description": "25次生成 ($0.8/次)，最佳选择",
+    "button_buy": "立即购买",
+    "processing": "处理中...",
+    "purchase_success": "购买成功！",
+    "credits_added": "已添加{{count}}次生成次数到您的账户",
+    "continue_creating": "继续创作",
+    "buy_more_credits": "购买积分"
+  },
+  "auth": {
+    "sign_in": "登录",
+    "sign_up": "注册",
+    "sign_out": "退出",
+    "email": "邮箱",
+    "password": "密码",
+    "magic_link": "获取魔法链接"
+  },
+  "example": {
+    "title": "吉卜力风格示例作品",
+    "description": "我们的 AI 将把你的照片转换成梦幻般的吉卜力风格艺术作品，就像这些例子一样",
+    "caption1": "由AI生成",
+    "caption2": "这曾是一张宠物照片",
+    "caption3": "灵感来自真实自拍",
+    "caption4": "下一张可能是你的照片！"
+  }
+} 

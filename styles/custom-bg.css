@@ -1,0 +1,73 @@
+.ghibli-bg {
+  /* 使用存在的背景图片 */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('/assets/web-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 增强标题在背景上的可见性 */
+.ghibli-bg h1, 
+.ghibli-bg h2, 
+.ghibli-bg h3 {
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+/* 增强段落在背景上的可见性 */
+.ghibli-bg p {
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* 增强按钮在背景上的可见性 */
+.ghibli-bg button, 
+.ghibli-bg .btn {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* 主容器增加透明背景 */
+.bg-white\/80, .bg-white\/90 {
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* 圆角卡片格式 */
+.rounded-3xl {
+  border-radius: 1.5rem;
+}
+
+/* 增加卡片过渡效果 */
+.transition {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* 添加滚动条隐藏样式 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* 增强按钮的hover效果 */
+.rounded-full {
+  overflow: hidden;
+  position: relative;
+}
+.rounded-full:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.rounded-full:hover:after {
+  opacity: 1;
+} 
