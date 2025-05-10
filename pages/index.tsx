@@ -684,4 +684,4 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
   };
 };
 
-export default Home; 
+export default Home;
