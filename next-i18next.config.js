@@ -4,5 +4,5 @@ module.exports = {
     locales: ['en', 'zh'],
     localeDetection: false,
   },
-  localePath: './locales',
+  localePath: './public/locales',
 }; 
