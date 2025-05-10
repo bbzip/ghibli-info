@@ -14,7 +14,6 @@ import LanguageSwitcher from '../components/LanguageSwitcher';
 import QuotaDisplay from '../components/QuotaDisplay';
 import ImageCarousel from '../components/ImageCarousel';
 import { CloudUpload, Upload, Zap, ArrowRight, Plus, ChevronDown, Download, Sparkles } from 'lucide-react';
-import '../styles/custom-bg.css';
 
 const Home = () => {
   const { t } = useTranslation('common');
