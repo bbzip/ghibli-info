@@ -76,21 +76,97 @@ const Home = () => {
     }
   }, []);
 
-  const handleImageSelected = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (e.target?.result) {
-        setSelectedImage(e.target.result as string);
-        setGeneratedImage(null);
-        setError(null);
-      }
-    };
-    reader.readAsDataURL(file);
+  // 图片压缩函数
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      // 创建一个FileReader来读取文件
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (!e.target?.result) {
+          reject('文件读取失败');
+          return;
+        }
+        
+        // 创建图片对象
+        const img = document.createElement('img');
+        img.onload = () => {
+          // 创建Canvas用于压缩
+          const canvas = document.createElement('canvas');
+          
+          // 计算新的尺寸，最大宽高设为1024像素
+          let width = img.width;
+          let height = img.height;
+          const maxSize = 1024;
+          
+          if (width > height && width > maxSize) {
+            height = Math.round((height * maxSize) / width);
+            width = maxSize;
+          } else if (height > maxSize) {
+            width = Math.round((width * maxSize) / height);
+            height = maxSize;
+          }
+          
+          // 设置Canvas尺寸
+          canvas.width = width;
+          canvas.height = height;
+          
+          // 在Canvas上绘制调整后的图像
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            reject('无法创建Canvas上下文');
+            return;
+          }
+          
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          // 将Canvas转换为Blob并返回
+          // 压缩质量设为0.7 (JPEG压缩质量70%)
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+          resolve(dataUrl);
+        };
+        
+        img.onerror = () => {
+          reject('图片加载失败');
+        };
+        
+        // 设置图片src
+        img.src = e.target.result as string;
+      };
+      
+      reader.onerror = () => {
+        reject('文件读取错误');
+      };
+      
+      reader.readAsDataURL(file);
+    });
   };
 
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelected = async (file: File) => {
+    try {
+      // 检查文件类型
+      if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+        setError('请上传JPG或PNG格式的图片');
+        return;
+      }
+      
+      // 显示加载状态
+      setError(null);
+      
+      // 压缩图片
+      const compressedImageData = await compressImage(file);
+      
+      // 设置压缩后的图片
+      setSelectedImage(compressedImageData);
+      setGeneratedImage(null);
+    } catch (err) {
+      console.error('图片处理出错:', err);
+      setError('图片处理失败，请尝试上传较小的图片');
+    }
+  };
+
+  const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      handleImageSelected(e.target.files[0]);
+      await handleImageSelected(e.target.files[0]);
     }
   };
 
