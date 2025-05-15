@@ -3,3 +3,38 @@ description:
 globs:
 alwaysApply: false
 ---
+# Image Processing Workflow
+
+This document explains how images are processed and transformed into Ghibli-style artwork.
+
+## Image Processing Flow
+
+1. **Image Upload**
+   - User uploads an image through [components/ImageUploader.tsx](mdc:components/ImageUploader.tsx)
+   - Image is stored as a data URL in the component state
+
+2. **Transformation Request**
+   - When user clicks "Generate", the image is sent to the backend API
+   - [pages/index.tsx](mdc:pages/index.tsx) handles the API request in the `handleGenerateImage` function
+   - The selected background style is also sent with the request
+
+3. **API Processing**
+   - Backend API processes the image with AI transformation
+   - A loader is displayed during processing [components/TotoroLoader.tsx](mdc:components/TotoroLoader.tsx)
+
+4. **Result Display**
+   - Transformed image is returned and displayed to the user
+   - User can download or share the resulting image
+   - Result is stored in user's gallery
+
+## Image Assets
+
+- Example images are stored in [public/images/](mdc:public/images/)
+- Generated images are stored in [public/generated/](mdc:public/generated/)
+- UI assets are stored in [public/assets/](mdc:public/assets/)
+
+## Quota Management
+
+- User's generation quota is tracked in [utils/quota.ts](mdc:utils/quota.ts)
+- Free and paid generations are managed separately
+- Quota information is displayed in [components/QuotaDisplay.tsx](mdc:components/QuotaDisplay.tsx)

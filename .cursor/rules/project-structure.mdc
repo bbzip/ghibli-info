@@ -3,3 +3,29 @@ description:
 globs:
 alwaysApply: false
 ---
+# Project Structure Guide
+
+This is a Ghibli-style image generator built with Next.js and TypeScript. The application allows users to upload images and transform them into Studio Ghibli inspired artwork using AI.
+
+## Key Files and Directories
+
+### Main Application Files
+- [pages/index.tsx](mdc:pages/index.tsx) - The main landing page with image upload and transformation functionality
+- [pages/_app.tsx](mdc:pages/_app.tsx) - Next.js application entry point
+- [pages/my-gallery.tsx](mdc:pages/my-gallery.tsx) - Gallery page for user-generated images
+
+### Components
+- [components/ImageUploader.tsx](mdc:components/ImageUploader.tsx) - Handles image upload functionality
+- [components/QuotaDisplay.tsx](mdc:components/QuotaDisplay.tsx) - Displays user's remaining generation quota
+- [components/SubscriptionModal.tsx](mdc:components/SubscriptionModal.tsx) - Modal for purchasing generation credits
+- [components/TotoroLoader.tsx](mdc:components/TotoroLoader.tsx) - Loading animation during image generation
+- [components/Layout.tsx](mdc:components/Layout.tsx) - Main layout wrapper
+
+### Internationalization
+- [locales/en/common.json](mdc:locales/en/common.json) - English translations
+- [locales/zh/common.json](mdc:locales/zh/common.json) - Chinese translations
+- [next-i18next.config.js](mdc:next-i18next.config.js) - i18n configuration
+
+### Configuration
+- [next.config.js](mdc:next.config.js) - Next.js configuration
+- [tailwind.config.js](mdc:tailwind.config.js) - Tailwind CSS configuration

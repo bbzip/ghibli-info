@@ -3,3 +3,31 @@ description:
 globs:
 alwaysApply: false
 ---
+# UI Components Guide
+
+This application uses a Studio Ghibli-inspired design language with light, ethereal UI components.
+
+## Key UI Components
+
+### Image Upload and Transformation
+- [components/UploadPanel.tsx](mdc:components/UploadPanel.tsx) - Handles the upload area UI
+- [components/ImageResult.tsx](mdc:components/ImageResult.tsx) - Displays transformation results
+- [components/ImageCarousel.tsx](mdc:components/ImageCarousel.tsx) - Shows before/after image comparisons
+
+### Animation Components
+- [components/GhibliFloatingElements.tsx](mdc:components/GhibliFloatingElements.tsx) - Animated floating elements in Ghibli style
+- [components/GhibliBackground.tsx](mdc:components/GhibliBackground.tsx) - Animated background in Ghibli style
+- [components/MouseFollower.tsx](mdc:components/MouseFollower.tsx) - Animated element that follows the mouse cursor
+
+### Layout Components
+- [components/Header.tsx](mdc:components/Header.tsx) - Site header with navigation
+- [components/Footer.tsx](mdc:components/Footer.tsx) - Site footer
+- [components/LanguageSwitcher.tsx](mdc:components/LanguageSwitcher.tsx) - Language switching component
+
+## Design Pattern Notes
+
+1. The site uses a light, airy color scheme inspired by Studio Ghibli films
+2. UI components feature rounded corners and soft shadows
+3. Animations are subtle and whimsical to match the Ghibli aesthetic
+4. Backgrounds use gradient overlays for a dreamy effect
+5. Component organization follows a clear hierarchy with distinct sections for upload, examples, and results

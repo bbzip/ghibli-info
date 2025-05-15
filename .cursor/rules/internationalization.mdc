@@ -3,3 +3,56 @@ description:
 globs:
 alwaysApply: false
 ---
+# Internationalization (i18n) Guide
+
+This application supports multiple languages using next-i18next. Currently, English (en) and Chinese (zh) are supported.
+
+## i18n Setup
+
+- [next-i18next.config.js](mdc:next-i18next.config.js) - Configuration for next-i18next
+- Translation files are stored in the [locales/](mdc:locales/) directory:
+  - [locales/en/common.json](mdc:locales/en/common.json) - English translations
+  - [locales/zh/common.json](mdc:locales/zh/common.json) - Chinese translations
+
+## Using Translations
+
+Translations are accessed using the `useTranslation` hook:
+
+```tsx
+import { useTranslation } from 'next-i18next';
+
+const Component = () => {
+  const { t } = useTranslation('common');
+  
+  return <h1>{t('site.title')}</h1>;
+};
+```
+
+## Translation Key Structure
+
+- `site.*` - General site text (title, description, etc.)
+- `upload.*` - Text related to the upload flow
+- `generate.*` - Text related to image generation
+- `example.*` - Text for example gallery section
+- `feature.*` - Text for features section
+- `quota.*` - Text for quota display
+- `result.*` - Text for result display
+- `subscription.*` - Text for subscription modal
+
+## Language Switching
+
+The [components/LanguageSwitcher.tsx](mdc:components/LanguageSwitcher.tsx) component handles language switching functionality.
+
+## Server-Side Translations
+
+Server-side translations are set up in page components using `getServerSideProps` or `getStaticProps`:
+
+```tsx
+export const getServerSideProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+};
+```

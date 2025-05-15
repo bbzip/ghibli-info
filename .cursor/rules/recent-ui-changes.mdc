@@ -3,3 +3,29 @@ description:
 globs:
 alwaysApply: false
 ---
+# Recent UI Changes Guide
+
+This document tracks recent UI changes made to improve the Ghibli-style image generator.
+
+## UI Layout Changes
+
+1. **Hero Section Modifications**
+   - Removed "Life needs a little magic" text from hero section
+   - Changed "Upload" button to "Generate" button
+   - Removed quota display and credits purchase button from hero section
+
+2. **Upload Area Enhancements**
+   - Added quota display and credits purchase button to upload area
+   - Improved visual styling with consistent rounded corners and shadows
+   - Enhanced the drag-and-drop functionality with better visual feedback
+
+3. **Example Gallery Improvements**
+   - Replaced before/after carousel with a 2x2 grid of Ghibli-style example images
+   - Added unique captions to each example: "Generated with AI", "This used to be a pet photo", "Inspired by a real selfie", "Your photo could be next!"
+   - Improved spacing and visual separation from the upload area
+
+## Key Files with UI Changes
+
+- [pages/index.tsx](mdc:pages/index.tsx) - Main landing page with updated hero section and example gallery
+- [components/QuotaDisplay.tsx](mdc:components/QuotaDisplay.tsx) - Component moved from hero section to upload area
+- [locales/en/common.json](mdc:locales/en/common.json) - Updated text strings for new UI elements
