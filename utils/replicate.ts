@@ -1,13 +1,45 @@
 import Replicate from "replicate";
-import fs from 'fs';
-import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { createClient } from '@supabase/supabase-js';
 
 // 最新模型版本 ID
 const MODEL_VERSION = "danila013/ghibli-easycontrol:6c4785d791d08ec65ff2ca5e9a7a0c2b0ac4e07ffadfb367231aa16bc7a52cbb";
 
 // Replicate API 可能返回的输出类型
 type ReplicateOutput = string | ReadableStream | any[] | Record<string, any>;
+
+// 创建 Supabase 客户端
+const getSupabaseClient = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Supabase credentials are not set. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.');
+  }
+  
+  return createClient(supabaseUrl, supabaseServiceKey);
+};
+
+// 检查 Supabase 错误并提供更详细的错误消息
+const handleSupabaseError = (error: any): string => {
+  if (error?.message?.includes('Permission denied')) {
+    return '权限不足，请确认 Supabase Service Role Key 拥有足够权限';
+  }
+  
+  if (error?.message?.includes('authentication failed')) {
+    return '认证失败，请检查 Supabase URL 和 Service Role Key 是否正确';
+  }
+  
+  if (error?.message?.includes('bucket not found')) {
+    return '存储桶不存在，且自动创建失败';
+  }
+  
+  if (error?.message?.includes('rate limit')) {
+    return '请求频率超过 Supabase 限制，请稍后再试';
+  }
+  
+  return error?.message || '上传到 Supabase 时发生未知错误';
+};
 
 // 创建 Replicate 实例
 const getReplicate = () => {
@@ -56,27 +88,80 @@ async function streamToBuffer(stream: ReadableStream): Promise<Buffer> {
   return Buffer.concat(chunks);
 }
 
-// 将 Buffer 保存为文件并返回公共 URL
-async function saveBinaryToFile(buffer: Buffer): Promise<string> {
+// 将 Buffer 上传到 Supabase Storage 并返回公共 URL
+async function uploadBufferToSupabase(buffer: Buffer): Promise<string> {
   try {
-    // 创建 public/generated 目录（如果不存在）
-    const outputDir = path.join(process.cwd(), 'public', 'generated');
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
+    const supabase = getSupabaseClient();
+    const fileName = `ghibli/${uuidv4()}.png`;
+    const bucketName = 'generated-images';
+    
+    console.log(`正在上传文件到 Supabase Storage: ${bucketName}/${fileName}`);
+    
+    // 检查 bucket 是否存在，不存在则创建
+    try {
+      const { data: buckets, error: listBucketsError } = await supabase.storage.listBuckets();
+      
+      if (listBucketsError) {
+        console.error('获取 buckets 列表失败:', listBucketsError);
+        throw new Error(handleSupabaseError(listBucketsError));
+      }
+      
+      const bucketExists = buckets?.some(bucket => bucket.name === bucketName);
+      
+      if (!bucketExists) {
+        console.log(`Bucket "${bucketName}" 不存在，正在创建...`);
+        const { error: createBucketError } = await supabase.storage.createBucket(bucketName, {
+          public: true,  // 设置为公开访问
+          fileSizeLimit: 5 * 1024 * 1024,  // 5MB 限制
+        });
+        
+        if (createBucketError) {
+          console.error('创建 bucket 失败:', createBucketError);
+          throw new Error(handleSupabaseError(createBucketError));
+        }
+        console.log(`Bucket "${bucketName}" 创建成功`);
+      }
+    } catch (error: any) {
+      if (error.message.includes('not have permission')) {
+        // 如果没有权限创建 bucket，继续尝试上传（bucket 可能已存在）
+        console.log('无权限列出或创建 bucket，尝试直接上传...');
+      } else {
+        throw error;
+      }
     }
     
-    // 生成唯一文件名
-    const fileName = `${uuidv4()}.png`;
-    const filePath = path.join(outputDir, fileName);
+    // 上传文件到 Supabase
+    const { data, error } = await supabase
+      .storage
+      .from(bucketName)
+      .upload(fileName, buffer, {
+        contentType: 'image/png',
+        upsert: false
+      });
     
-    // 写入文件
-    fs.writeFileSync(filePath, buffer);
+    if (error) {
+      console.error('上传到 Supabase 失败:', error);
+      throw new Error(handleSupabaseError(error));
+    }
     
-    // 返回相对 URL
-    return `/generated/${fileName}`;
+    // 获取公共 URL
+    const { data: publicUrlData } = supabase
+      .storage
+      .from(bucketName)
+      .getPublicUrl(fileName);
+    
+    if (!publicUrlData || !publicUrlData.publicUrl) {
+      throw new Error('获取公共 URL 失败，请检查 bucket 权限设置');
+    }
+    
+    console.log('上传成功，公共 URL:', publicUrlData.publicUrl);
+    return publicUrlData.publicUrl;
   } catch (error) {
-    console.error('保存文件失败:', error);
-    throw new Error('保存生成的图像文件失败');
+    console.error('上传图像到 Supabase 失败:', error);
+    if (error instanceof Error) {
+      throw error; // 重新抛出已处理的错误
+    }
+    throw new Error('上传生成的图像到 Supabase 失败');
   }
 }
 
@@ -100,8 +185,8 @@ async function handleBinaryImage(stream: ReadableStream): Promise<string> {
       console.log('警告：数据不是标准 PNG 格式');
     }
     
-    // 保存 Buffer 为文件并返回 URL
-    return await saveBinaryToFile(buffer);
+    // 上传 Buffer 到 Supabase 并返回公共 URL
+    return await uploadBufferToSupabase(buffer);
   } catch (error) {
     console.error('处理二进制数据失败:', error);
     throw new Error('处理图像数据失败');
@@ -162,13 +247,13 @@ export const generateImage = async (imageUrl: string): Promise<string> => {
         // 解码 base64
         const base64Data = output.split(',')[1];
         const buffer = Buffer.from(base64Data, 'base64');
-        return await saveBinaryToFile(buffer);
+        return await uploadBufferToSupabase(buffer);
       }
       
       // 尝试将字符串作为原始图像数据处理
       try {
         const buffer = Buffer.from(output, 'binary');
-        return await saveBinaryToFile(buffer);
+        return await uploadBufferToSupabase(buffer);
       } catch (e) {
         console.error('无法将字符串转换为图像:', e);
       }
@@ -188,7 +273,7 @@ export const generateImage = async (imageUrl: string): Promise<string> => {
         // 尝试将字符串作为图像数据处理
         try {
           const buffer = Buffer.from(firstItem, 'binary');
-          return await saveBinaryToFile(buffer);
+          return await uploadBufferToSupabase(buffer);
         } catch (e) {
           console.error('无法将数组字符串转换为图像:', e);
         }
@@ -202,7 +287,7 @@ export const generateImage = async (imageUrl: string): Promise<string> => {
       // 尝试作为二进制数据处理
       try {
         const buffer = createBufferFromBinary(firstItem);
-        return await saveBinaryToFile(buffer);
+        return await uploadBufferToSupabase(buffer);
       } catch (e) {
         console.error('无法将数组元素转换为图像:', e);
       }
@@ -221,7 +306,7 @@ export const generateImage = async (imageUrl: string): Promise<string> => {
           // 尝试将字符串作为图像数据处理
           try {
             const buffer = Buffer.from(obj.output, 'binary');
-            return await saveBinaryToFile(buffer);
+            return await uploadBufferToSupabase(buffer);
           } catch (e) {
             console.error('无法将对象字符串转换为图像:', e);
           }
@@ -237,7 +322,7 @@ export const generateImage = async (imageUrl: string): Promise<string> => {
             // 尝试将字符串作为图像数据处理
             try {
               const buffer = Buffer.from(firstOutput, 'binary');
-              return await saveBinaryToFile(buffer);
+              return await uploadBufferToSupabase(buffer);
             } catch (e) {
               console.error('无法将对象数组字符串转换为图像:', e);
             }
@@ -251,7 +336,7 @@ export const generateImage = async (imageUrl: string): Promise<string> => {
           // 尝试作为二进制数据处理
           try {
             const buffer = createBufferFromBinary(firstOutput);
-            return await saveBinaryToFile(buffer);
+            return await uploadBufferToSupabase(buffer);
           } catch (e) {
             console.error('无法将对象数组元素转换为图像:', e);
           }
@@ -260,7 +345,7 @@ export const generateImage = async (imageUrl: string): Promise<string> => {
         // 尝试 output 本身作为二进制数据
         try {
           const buffer = createBufferFromBinary(obj.output);
-          return await saveBinaryToFile(buffer);
+          return await uploadBufferToSupabase(buffer);
         } catch (e) {
           console.error('无法将 output 转换为图像:', e);
         }
@@ -270,7 +355,7 @@ export const generateImage = async (imageUrl: string): Promise<string> => {
       if (obj instanceof Uint8Array || obj instanceof ArrayBuffer) {
         try {
           const buffer = createBufferFromBinary(obj);
-          return await saveBinaryToFile(buffer);
+          return await uploadBufferToSupabase(buffer);
         } catch (e) {
           console.error('无法将对象转换为图像:', e);
         }

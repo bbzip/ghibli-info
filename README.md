@@ -57,6 +57,10 @@ STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
 
 # Site URL for Stripe redirects (no trailing slash)
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 ```
 
 4. Run the development server:
@@ -67,6 +71,14 @@ yarn dev
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Setting up Supabase Storage
+
+1. Create a [Supabase account](https://supabase.io) if you don't have one
+2. Create a new project and retrieve your `URL` and `service_role_key` from the API settings
+3. Create a new storage bucket named `generated-images` in the Storage section
+4. Set up bucket permissions to allow public access for reading generated images
+5. Add your Supabase credentials to the environment variables
 
 ### Setting up Stripe
 
